@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="card">
+            <h2><i class="fas fa-chart-line"></i> Analytics</h2>
+            <table class="analytics-table" id="analytics"></table>
+        </div>
+        <div class="card">
+            <h2><i class="fas fa-hand-holding-usd"></i> Credit Requests</h2>
+            <div id="requests"></div>
+        </div>
+        <div class="card">
+            <h2><i class="fas fa-user-cog"></i> Manage User Credits</h2>
+            <form id="adjustCreditsForm">
+                <label>Username: <input type="text" name="username" required></label>
+                <label>Credits: <input type="number" name="credits" required></label>
+                <button type="submit" class="tooltip" data-tooltip="Adjust user credits"><i class="fas fa-cogs"></i> Adjust</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2><i class="fas fa-upload"></i> Upload File to Uploads Folder</h2>
+            <form id="adminUploadForm" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".txt" required>
+                <button type="submit" class="tooltip" data-tooltip="Upload file to reference folder"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+            </form>
+        </div>
+    </div>
+    <script src="three.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Three.js 3D Particles (same as dashboard)
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('particles'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const particles = new THREE.BufferGeometry();
+        const particleCount = 5000;
+        const posArray = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 2000;
+        }
+
+        particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const material = new THREE.PointsMaterial({ color: 0x00d4ff, size: 2, transparent: true, opacity: 0.8 });
+        const particleSystem = new THREE.Points(particles, material);
+        scene.add(particleSystem);
+
+        camera.position.z = 500;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particleSystem.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>

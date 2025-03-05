@@ -1,0 +1,250 @@
+/* Reset and Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url('night-sky.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Dark Theme Overlay */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 50px auto;
+}
+
+/* Card Layout */
+.card {
+    background: rgba(30, 30, 60, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: perspective(500px) translateZ(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: perspective(500px) translateZ(10px);
+    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
+}
+
+/* Text Styling */
+h1, h2 {
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+p, label {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+
+input[type="text"], input[type="number"], input[type="file"] {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
+    font-size: 0.9rem;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    padding: 8px 16px;
+    background: linear-gradient(45deg, #00d4ff, #007bff);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.6);
+}
+
+/* Matches List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: rgba(40, 40, 80, 0.9);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+li:hover {
+    transform: scale(1.02);
+}
+
+/* Table Styling */
+.analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(20, 20, 40, 0.9);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.analytics-table th, .analytics-table td {
+    padding: 12px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+.analytics-table th {
+    background: linear-gradient(45deg, #00d4ff, #007bff);
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+}
+
+.analytics-table tr:nth-child(even) {
+    background: rgba(40, 40, 80, 0.5);
+}
+
+.analytics-table tr:hover {
+    background: rgba(60, 60, 100, 0.7);
+    transform: scale(1.01);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    background: #333;
+    border-radius: 5px;
+    height: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(45deg, #00d4ff, #007bff);
+    transition: width 0.5s ease;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Particles Canvas */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateZ(0); }
+    50% { transform: translateY(-10px) translateZ(10px); }
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 10px rgba(0, 212, 255, 0.7); }
+    100% { text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 123, 255, 0.8); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        margin: 20px auto;
+    }
+    .card {
+        padding: 15px;
+    }
+    form {
+        width: 100%;
+    }
+    .analytics-table {
+        font-size: 0.8rem;
+    }
+}

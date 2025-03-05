@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="container">
+        <h1>User Dashboard</h1>
+        <div class="card" id="profile">
+            <h2><i class="fas fa-user"></i> Profile</h2>
+        </div>
+        <div class="card">
+            <h2><i class="fas fa-chart-bar"></i> Your Analytics</h2>
+            <div id="userAnalytics"></div>
+            <p>Scans Today: <span id="dailyScans">0</span>/20</p>
+            <div class="progress-bar"><div class="progress-bar-fill" id="scanProgress" style="width: 0%;"></div></div>
+        </div>
+        <div class="card">
+            <h2><i class="fas fa-upload"></i> Scan Document</h2>
+            <form id="uploadForm" enctype="multipart/form-data" action="/scan/upload" method="POST">
+                <input type="file" name="file" accept=".txt" required>
+                <button type="submit" class="tooltip" data-tooltip="Upload a document to scan"><i class="fas fa-cloud-upload-alt"></i> Scan</button>
+            </form>
+            <button onclick="requestCredits()" class="tooltip" data-tooltip="Request more credits"><i class="fas fa-coins"></i> Request Credits</button>
+            <button onclick="exportHistory()" class="tooltip" data-tooltip="Download your scan history"><i class="fas fa-download"></i> Export History</button>
+        </div>
+        <div class="card" id="matches">
+            <h2><i class="fas fa-search"></i> Matches</h2>
+        </div>
+    </div>
+    <script src="three.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Three.js 3D Particles
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('particles'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const particles = new THREE.BufferGeometry();
+        const particleCount = 5000;
+        const posArray = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 2000;
+        }
+
+        particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const material = new THREE.PointsMaterial({ color: 0x00d4ff, size: 2, transparent: true, opacity: 0.8 });
+        const particleSystem = new THREE.Points(particles, material);
+        scene.add(particleSystem);
+
+        camera.position.z = 500;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particleSystem.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>
